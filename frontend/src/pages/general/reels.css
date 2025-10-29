@@ -1,0 +1,353 @@
+.reels-container {
+  height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  background: #000;
+}
+
+.reel {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.reel-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.reel-overlay {
+  position: absolute;
+  left: 0;
+  right: 80px; /* Make room for action panel */
+  bottom: 0;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.9) 100%);
+  z-index: 2;
+  pointer-events: none; /* allow clicks to pass through unless enabled on children */
+}
+
+.reel-desc {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.4;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.reel-button {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #ff7a45 0%, #ff6b35 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 4px 12px rgba(255, 122, 69, 0.3);
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.reel-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 122, 69, 0.4);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff5a2b 100%);
+}
+
+
+/* Like button */
+.reel-like-button {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(6px);
+}
+
+.reel-like-button:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+.reel-like-button.liked {
+  background: rgba(255,0,0,0.18);
+  border-color: rgba(255,0,0,0.35);
+}
+
+.reel-like-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.reel-like-count {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Save button */
+.reel-save-button {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(6px);
+}
+
+.reel-save-button:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+.reel-save-button.saved {
+  background: rgba(0,128,255,0.18);
+  border-color: rgba(0,128,255,0.35);
+}
+
+.reel-save-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.reel-save-count {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Right-side action stack - Instagram Reels style */
+.reel-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 3;
+  pointer-events: auto;
+  align-items: center;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 48px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.action-item:hover {
+  transform: scale(1.05);
+}
+
+.action-item.active .action-icon-box {
+  transform: scale(1.1);
+}
+
+.action-icon-box {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.action-icon-box svg {
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.action-item.active .action-icon-box {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Saved state color */
+.action-item.save.active .action-icon-box {
+  color: #3742fa; /* makes saved icon blue via currentColor */
+}
+
+.action-item.active .action-icon-box svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+.action-item:hover .action-icon-box svg {
+  transform: scale(1.05);
+}
+
+.action-label {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.3px;
+}
+
+/* Bottom Navigation - Instagram style */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 16px 0 calc(16px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1000;
+  gap: 80px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #8e8e8e;
+  text-decoration: none;
+  font-size: 10px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  min-width: 60px;
+}
+
+.nav-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-item.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.nav-icon {
+  font-size: 24px;
+  line-height: 1;
+  transition: all 0.3s ease;
+  color: currentColor;
+}
+
+.nav-icon svg {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.1);
+}
+
+.nav-item.active .nav-icon svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.nav-item:hover .nav-icon svg {
+  transform: scale(1.05);
+}
+
+.nav-label {
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+/* Empty state for Saved page */
+.empty-state {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #000;
+  color: #fff;
+}
+
+.empty-icon {
+  color: #8e8e8e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.empty-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #ddd;
+}
