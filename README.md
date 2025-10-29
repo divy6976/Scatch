@@ -97,7 +97,5 @@ Frontend `package.json`:
 2. Make changes with clear commit messages
 3. Open a PR to `main`
 
-### License
-MIT
 
 
